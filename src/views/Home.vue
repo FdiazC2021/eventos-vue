@@ -11,12 +11,12 @@
                 <input type="text" name="cliente" v-model="evento.cliente">
                 <label for="documento">Documento:</label>
                 <input type="text" name="documento" v-model="evento.documento">
+                <label for="salon">Salón:</label>
                 <div>
-                    <input type="radio" name="salon" value="1" v-model="salon"> Normal
-                    <input type="radio" name="salon" value="2" v-model="salon"> Grande
+                    <input type="radio" name="salon" value="0" v-model="salon"> Normal
+                    <input type="radio" name="salon" value="1" v-model="salon"> Grande
                     
                 </div>
-                <label for="salon">Salón:</label>
                 <input type="checkbox" name="meseros_extra" v-model="extra">
                 <label for="meseros_extra">Desea agregar meseros extra?</label>
                 <label v-if="extra" for="cantidad">Cantidad meseros</label>
@@ -65,23 +65,27 @@
 
 
 export default {
-  
+    mounted(){
+        document.title="Gestión de Eventos";
+    },
   data(){
     return {
-      salonNormal: {"nombre":"Normal", 
+            
+      titulo:"Gestión de eventos - Eventos",
+      listaSalones:[
+            {"nombre":"Normal", 
                     "precio": 1000000, 
                     "extra_mesero":150000,
                     "cantidad_meseros":2, 
                     "plato":50000
                 },
-      salonGrande: {"nombre":"Grande", 
+            {"nombre":"Grande", 
                     "precio": 2000000, 
                     "extra_mesero":100000,
                     "cantidad_meseros":4, 
                     "plato":40000
-                },
-      
-      titulo:"Gestión de eventos",
+                }           
+      ],
       listaEventos:[
     {
         cliente:"José",
@@ -129,8 +133,41 @@ export default {
     
   },
   methods:{
+      limpiarFormulario(){
+          this.evento = {
+                cliente:"",
+                documento:"",
+                salon:{},
+                meseros:0,
+                platos:0,
+                total:0
+                }
+        this.salon=0;
+        this.extra=false;
+        this.comida=false;      
+      },
       procesarInformacion(){
-          console.log(this.evento)
+          this.evento.salon = this.listaSalones[this.salon];
+          if (this.extra) {
+              this.evento.meseros+=this.evento.salon.cantidad_meseros;
+          }else{
+              this.evento.meseros=this.evento.salon.cantidad_meseros;
+          }
+          if (!this.comida) {
+              this.platos=0;
+          }
+
+          let valorMeseros = this.evento.meseros*this.evento.salon.extra_mesero;
+          let valorComida = this.evento.platos*this.evento.salon.plato;
+
+          this.evento.total = valorComida + valorMeseros + this.evento.salon.precio;
+
+          this.listaEventos.push(this.evento);
+          this.limpiarFormulario();
+
+        //   this.$router.push("/about"); opcion 1
+
+            // this.$router.push({name:"Home", params:{datos:this.listaEventos}});
       }
   }
 }

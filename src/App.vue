@@ -1,4 +1,6 @@
 <template>
+<img id="logo" src="@/assets/logo.png" alt="">
+<h1>Menú</h1>
   <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
@@ -13,6 +15,10 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+#logo{
+  width: 5rem;
 }
 
 #nav {
