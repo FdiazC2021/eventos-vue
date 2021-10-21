@@ -1,5 +1,8 @@
+import axios from "axios";
+
 class SalonService {
     salones = [];
+    url ="http://localhost:80007salon"
 
     constructor() {
         this.salones = [
@@ -21,6 +24,15 @@ class SalonService {
     }
 
     obtenerTodos() {
-        return this.salones
+        // return this.salones
+        return axios.get(`${this.url}/todos`).then(
+            (respuesta)=>{
+                console.log(respuesta.data);
+            }
+        ).catch(
+            (error)=>{
+                
+            }
+        );
     }
 } export default new SalonService();
