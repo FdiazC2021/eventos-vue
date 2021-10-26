@@ -4,6 +4,7 @@
         <input type="text" placeholder="Usuario" v-model="usuario">
         <input type="password" placeholder="Contraseña" v-model="password">
         <button @click.prevent="iniciarSesion">Iniciar</button>
+        <h2 v-if="error!=''">{{error}}</h2>
     </form>
 </template>
 
@@ -15,7 +16,8 @@ export default {
     data(){
         return{
             usuario:"",
-            password:""
+            password:"",
+            error:""
         }
     },
     methods:{
@@ -23,8 +25,12 @@ export default {
             ClienteService.validar(this.usuario, this.password).then(
                 (respuesta)=>{
                     console.log(respuesta.data);
+                    
                     if (respuesta.data.id) {
+                        localStorage.cliente=respuesta.data.id;
                         this.$router.push({name:"Eventos"});
+                    }else{
+                        this.error="Datos inválidos"
                     }
                 }
             );
