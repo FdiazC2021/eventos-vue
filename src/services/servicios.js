@@ -1,8 +1,8 @@
 import axios from "axios";
 
-class SalonService {
+class ServicioService {
     salones = [];
-    url ="http://localhost:8000/salon"
+    url ="http://localhost:8000/servicio"
 
     constructor() {
         this.salones = [
@@ -35,4 +35,4 @@ class SalonService {
             }
         );
     }
-} export default new SalonService();
+} export default new ServicioService();

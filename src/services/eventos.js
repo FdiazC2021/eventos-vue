@@ -1,7 +1,10 @@
+import axios from "axios";
+
 class EventoService {
 
     eventos = [];
     eventoActual = {};
+    url="http://localhost:8000/evento"
 
     constructor() {
         this.eventoActual = {
@@ -49,8 +52,17 @@ class EventoService {
         return this.eventos;
     }
 
+    obtenerPorCliente(){
+        let id = localStorage.cliente;
+        return axios.get(`${this.url}/cliente/${id}`);
+    }
+
     obtenerEventoActual(){
         return this.eventoActual;
+    }
+
+    registrar(evento){
+        return axios.post(`${this.url}`, evento);
     }
 
 } export default new EventoService();

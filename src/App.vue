@@ -24,6 +24,7 @@ export default {
   methods:{
     cerrarSesion(){
       localStorage.clear();
+      this.$router.push({name:"Login"});
     }
   }
 }

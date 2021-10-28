@@ -12,5 +12,10 @@ class ClienteService{
 
     }
 
+    obtener(){
+        let id = localStorage.cliente;
+        return axios.get(`${this.url}/${id}`);
+    }
+
 }
 export default new ClienteService();
